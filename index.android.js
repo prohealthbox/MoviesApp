@@ -29,7 +29,7 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
 var RouteMapper = function(route, navigationOperations, onComponentRef) {
   _navigator = navigationOperations;
   if (route.name === 'search') {
-    reutrn (
+    return (
       <SearchScreen navigator={navigationOperations} />
     );
   } else if (route.name === 'movie') {

@@ -30,7 +30,7 @@ class SearchBar extends React.Component {
             onPress={() => this.refs.input && this.refs.input.focus()}>
           <View>
             <Image
-              source={require('image!android_search_white')}
+              source={{ uri: 'android_search_white' }}
               style={styles.icon}
             />
           </View>

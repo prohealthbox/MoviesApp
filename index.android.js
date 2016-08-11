@@ -37,7 +37,7 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
       <View style={{flex: 1}}>
         <ToolbarAndroid
           actions={[]}
-          navIcon={require('image!android_back_white')}
+          navIcon={{ uri: 'android_search_white' }}
           onIconClicked={navigationOperations.pop}
           style={styles.toolbar}
           titleColor="white"

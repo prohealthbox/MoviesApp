@@ -11,7 +11,7 @@ var MAX_VALUE = 200;
 
 import type { StyleObj } from 'StyleSheetTypes';
 
-function getStyleFromSource(score: number): StyleObj {
+function getStyleFromScore(score: number): StyleObj {
   if (score < 0) {
     return styles.noScore;
   }
@@ -32,4 +32,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = getStyleFromSource;
+module.exports = getStyleFromScore;

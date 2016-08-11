@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 var getImageSource = require('./getImageSource');
-var getStyleFromSource = require('./getStyleFromSource');
+var getStyleFromScore = require('./getStyleFromScore');
 var getTextFromSource = require('./getTextFromSource');
 
 class MovieScreen extends Component {
@@ -56,13 +56,13 @@ class Ratings extends Component {
       <View>
         <View style={styles.rating}>
           <Text style={styles.ratingTitle}>Critics:</Text>
-          <Text style={[styles.ratingValue, getStyleFromSource(criticsScore)]}>
+          <Text style={[styles.ratingValue, getStyleFromScore(criticsScore)]}>
             {getTextFromSource(criticsScore)}
           </Text>
         </View>
         <View style={styles.rating}>
           <Text style={styles.ratingTitle}>Audience:</Text>
-          <Text style={[styles.ratingValue, getStyleFromSource(audienceScore)]}>
+          <Text style={[styles.ratingValue, getStyleFromScore(audienceScore)]}>
             {getTextFromSource(audienceScore)}
           </Text>
         </View>

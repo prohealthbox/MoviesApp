@@ -14,7 +14,7 @@ import {
 
 var getImageSource = require('./getImageSource');
 var getStyleFromScore = require('./getStyleFromScore');
-var getTextFromSource = require('./getTextFromSource');
+var getTextFromScore = require('./getTextFromScore');
 
 class MovieScreen extends Component {
   render() {
@@ -57,13 +57,13 @@ class Ratings extends Component {
         <View style={styles.rating}>
           <Text style={styles.ratingTitle}>Critics:</Text>
           <Text style={[styles.ratingValue, getStyleFromScore(criticsScore)]}>
-            {getTextFromSource(criticsScore)}
+            {getTextFromScore(criticsScore)}
           </Text>
         </View>
         <View style={styles.rating}>
           <Text style={styles.ratingTitle}>Audience:</Text>
           <Text style={[styles.ratingValue, getStyleFromScore(audienceScore)]}>
-            {getTextFromSource(audienceScore)}
+            {getTextFromScore(audienceScore)}
           </Text>
         </View>
       </View>

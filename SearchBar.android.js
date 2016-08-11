@@ -4,8 +4,9 @@
  */
 'use strict';
 
-import React, {Component} from 'react';
-import {
+var React = require('react');
+var ReactNative = require('react-native');
+var {
   Image,
   Platform,
   ActivityIndicator,
@@ -13,22 +14,20 @@ import {
   StyleSheet,
   TouchableNativeFeedback,
   View,
-} from 'react-native';
+} = ReactNative;
 
 var IS_RIPPLE_EFFECT_SUPPORTED = Platform.Version >= 21;
 
-class SearchBar extends Component {
+class SearchBar extends React.Component {
   render() {
     var background = IS_RIPPLE_EFFECT_SUPPORTED ?
       TouchableNativeFeedback.SelectableBackgroundBorderless() :
       TouchableNativeFeedback.SelectableBackground();
-
     return (
       <View style={styles.searchBar}>
         <TouchableNativeFeedback
-          background={background}
-          onPress={() => this.refs.input && this.refs.input.focus()}
-        >
+            background={background}
+            onPress={() => this.refs.input && this.refs.input.focus()}>
           <View>
             <Image
               source={require('image!android_search_white')}

@@ -3,8 +3,9 @@
  */
 'use strict';
 
-import React, {Component} from 'react';
-import {
+var React = require('react');
+var ReactNative = require('react-native');
+var {
   Image,
   Platform,
   StyleSheet,
@@ -12,15 +13,15 @@ import {
   TouchableHighlight,
   TouchableNativeFeedback,
   View
-} from 'react-native';
+} = ReactNative;
 
 var getStyleFromScore = require('./getStyleFromScore');
 var getImageSource = require('./getImageSource');
 var getTextFromScore = require('./getTextFromScore');
 
-class MovieCell extends Component {
+class MovieCell extends React.Component {
   render() {
-    var criticsScore = this.props.ratings.critics_score;
+    var criticsScore = this.props.movie.ratings.critics_score;
     var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
@@ -30,22 +31,31 @@ class MovieCell extends Component {
         <TouchableElement
           onPress={this.props.onSelect}
           onShowUnderlay={this.props.onHighlight}
-          onHideUnderlay={this.props.onUnhighlight}
-        >
-          <View style={styles.textContainer}>
-            <Text style={styles.movieTitle} numberofLines={1}>
-              {this.props.movie.year}
-              {' '}&bull;{' '}
-              <Text style={getStyleFromScore(criticsScore)}>
-                Critics {getTextFromScore(criticsScore)}
+          onHideUnderlay={this.props.onUnhighlight}>
+          <View style={styles.row}>
+            <Image
+              source={getImageSource(this.props.movie, 'det')}
+              style={styles.cellImage}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.movieTitle} numberOfLines={2}>
+                {this.props.movie.title}
               </Text>
-            </Text>
+              <Text style={styles.movieYear} numberOfLines={1}>
+                {this.props.movie.year}
+                {' '}&bull;{' '}
+                <Text style={getStyleFromScore(criticsScore)}>
+                  Critics {getTextFromScore(criticsScore)}
+                </Text>
+              </Text>
+            </View>
           </View>
         </TouchableElement>
       </View>
     );
   }
 }
+
 var styles = StyleSheet.create({
   textContainer: {
     flex: 1,
@@ -77,6 +87,6 @@ var styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
     marginLeft: 4,
   },
-})
+});
 
 module.exports = MovieCell;

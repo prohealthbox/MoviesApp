@@ -3,20 +3,21 @@
  */
 'use strict';
 
-import React, { Component } from 'react';
-import {
+var React = require('react');
+var ReactNative = require('react-native');
+var {
   Image,
   ScrollView,
   StyleSheet,
   Text,
-  View
-} from 'react-native';
+  View,
+} = ReactNative;
 
 var getImageSource = require('./getImageSource');
 var getStyleFromScore = require('./getStyleFromScore');
 var getTextFromScore = require('./getTextFromScore');
 
-class MovieScreen extends Component {
+class MovieScreen extends React.Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -47,7 +48,7 @@ class MovieScreen extends Component {
   }
 }
 
-class Ratings extends Component {
+class Ratings extends React.Component {
   render() {
     var criticsScore = this.props.ratings.critics_score;
     var audienceScore = this.props.ratings.audience_score;
@@ -71,7 +72,7 @@ class Ratings extends Component {
   }
 }
 
-class Cast extends Component {
+class Cast extends React.Component {
   render() {
     if (!this.props.actors) {
       return null;
@@ -92,22 +93,22 @@ class Cast extends Component {
 
 var styles = StyleSheet.create({
   contentContainer: {
-    padding: 10
+    padding: 10,
   },
   rightPane: {
     justifyContent: 'space-between',
-    flex: 1
+    flex: 1,
   },
   movieTitle: {
     flex: 1,
     fontSize: 16,
-    fontWeight: '500'
+    fontWeight: '500',
   },
   rating: {
     marginTop: 10,
   },
   ratingTitle: {
-    fontSize: 14
+    fontSize: 14,
   },
   ratingValue: {
     fontSize: 28,

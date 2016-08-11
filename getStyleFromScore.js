@@ -3,9 +3,10 @@
  */
 'use strict';
 
-import {
+var ReactNative = require('react-native');
+var {
   StyleSheet,
-} from 'react-native';
+} = ReactNative;
 
 var MAX_VALUE = 200;
 

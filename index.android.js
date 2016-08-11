@@ -1,18 +1,18 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
  * @flow
  */
+'use strict';
 
-import React, { Component } from 'react';
-import {
+var React = require('react');
+var ReactNative = require('react-native');
+var {
   AppRegistry,
   BackAndroid,
   Navigator,
   StyleSheet,
   ToolbarAndroid,
-  View
-} from 'react-native';
+  View,
+} = ReactNative;
 
 var MovieScreen = require('./MovieScreen');
 var SearchScreen = require('./SearchScreen');
@@ -33,25 +33,26 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
       <SearchScreen navigator={navigationOperations} />
     );
   } else if (route.name === 'movie') {
-    <View style={{flex: 1}}>
-      <ToolbarAndroid
-        actions={[]}
-        navIcon={require('image!android_back_white')}
-        onIconClicked={navigationOperations.pop}
-        style={styles.toolbar}
-        titleColor="white"
-        title={route.movie.title}
-      />
-      <MovieScreen
-        style={{flex: 1}}
-        navigator={navigationOperations}
-        movie={route.movie}
-      />
-    </View>
+    return (
+      <View style={{flex: 1}}>
+        <ToolbarAndroid
+          actions={[]}
+          navIcon={require('image!android_back_white')}
+          onIconClicked={navigationOperations.pop}
+          style={styles.toolbar}
+          titleColor="white"
+          title={route.movie.title} />
+        <MovieScreen
+          style={{flex: 1}}
+          navigator={navigationOperations}
+          movie={route.movie}
+        />
+      </View>
+    );
   }
-}
+};
 
-class MoviesApp extends Component {
+class MoviesApp extends React.Component {
   render() {
     var initialRoute = {name: 'search'};
     return (
@@ -65,14 +66,14 @@ class MoviesApp extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
   },
   toolbar: {
     backgroundColor: '#a9a9a9',
-    height: 56
+    height: 56,
   },
 });
 

@@ -1,16 +1,18 @@
 /**
  * @flow
  */
-import React, {Component} from 'react';
-import {
+'use strict';
+
+var React = require('react');
+var ReactNative = require('react-native');
+var {
   ActivityIndicator,
   ListView,
   Platform,
   StyleSheet,
   Text,
-  View
-} from 'react-native';
-
+  View,
+} = ReactNative;
 var TimerMixin = require('react-timer-mixin');
 
 var invariant = require('fbjs/lib/invariant');
@@ -20,12 +22,21 @@ var MovieCell = require('./MovieCell');
 var MovieScreen = require('./MovieScreen');
 var SearchBar = require('SearchBar');
 
+/**
+ * This is for demo purposes only, and rate limited.
+ * In case you want to use the Rotten Tomatoes' API on a real app you should
+ * create an account at http://developer.rottentomatoes.com/
+ */
 var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/';
 var API_KEYS = [
   '7waqfqbprs7pajbz28mqf6vz',
   // 'y4vwv8m33hed9ety83jmv52f', Fallback api_key
 ];
 
+// Results should be cached keyed by the query
+// with values of null meaning "being fetched"
+// and anything besides null and undefined
+// as the result of a valid query
 var resultsCache = {
   dataForQuery: {},
   nextPageNumberForQuery: {},
@@ -48,7 +59,7 @@ var SearchScreen = React.createClass({
       }),
       filter: '',
       queryNumber: 0,
-    }
+    };
   },
 
   componentDidMount: function() {
@@ -63,15 +74,15 @@ var SearchScreen = React.createClass({
         encodeURIComponent(query) + '&page_limit=20&page=' + pageNumber
       );
     } else {
-      // With no query, load latest movies.
+      // With no query, load latest movies
       return (
-        API_URL + 'lists/moies/in_theaters.json?&apikey=' + apiKey +
+        API_URL + 'lists/movies/in_theaters.json?apikey=' + apiKey +
         '&page_limit=20&page=' + pageNumber
       );
     }
   },
 
-  searchmovies: function(query: string) {
+  searchMovies: function(query: string) {
     this.timeoutID = null;
 
     this.setState({filter: query});
@@ -174,7 +185,7 @@ var SearchScreen = React.createClass({
         if (!responseData.movies) {
           resultsCache.totalForQuery[query] = moviesForQuery.length;
         } else {
-          for (var i  in responseData.movies) {
+          for (var i in responseData.movies) {
             moviesForQuery.push(responseData.movies[i]);
           }
           resultsCache.dataForQuery[query] = moviesForQuery;
@@ -216,7 +227,7 @@ var SearchScreen = React.createClass({
   },
 
   onSearchChange: function(event: Object) {
-    var filter = event.nativeElement.text.toLowerCase();
+    var filter = event.nativeEvent.text.toLowerCase();
 
     this.clearTimeout(this.timeoutID);
     this.timeoutID = this.setTimeout(() => this.searchMovies(filter), 100);
@@ -237,10 +248,10 @@ var SearchScreen = React.createClass({
   ) {
     var style = styles.rowSeparator;
     if (adjacentRowHighlighted) {
-      style = [style, styles.rowSeparatorHide];
+        style = [style, styles.rowSeparatorHide];
     }
     return (
-      <View key={'SEP_' + sectionID + '_' + rowID} style={style}/>
+      <View key={'SEP_' + sectionID + '_' + rowID}  style={style}/>
     );
   },
 
@@ -280,22 +291,22 @@ var SearchScreen = React.createClass({
         showsVerticalScrollIndicator={false}
       />;
 
-      return (
-        <View style={styles.container}>
-          <SearchBar
-            onSearchChange={this.onSearchChange}
-            isLoading={this.state.isLoading}
-            onFocus={() =>
-              this.refs.listview && this.refs.listview.getScrollResponder().scrollTo({ x: 0, y: 0})}
-          />
-          <View style={styles.separator} />
-          {content}
-        </View>
-      );
+    return (
+      <View style={styles.container}>
+        <SearchBar
+          onSearchChange={this.onSearchChange}
+          isLoading={this.state.isLoading}
+          onFocus={() =>
+            this.refs.listview && this.refs.listview.getScrollResponder().scrollTo({ x: 0, y: 0 })}
+        />
+        <View style={styles.separator} />
+        {content}
+      </View>
+    );
   },
 });
 
-class NoMovies extends Component {
+class NoMovies extends React.Component {
   render() {
     var text = '';
     if (this.props.filter) {
@@ -307,7 +318,7 @@ class NoMovies extends Component {
     }
 
     return (
-      <View style={[styles.container, styles.centreText]}>
+      <View style={[styles.container, styles.centerText]}>
         <Text style={styles.noMoviesText}>{text}</Text>
       </View>
     );
@@ -319,7 +330,7 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  centreText: {
+  centerText: {
     alignItems: 'center',
   },
   noMoviesText: {

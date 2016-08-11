@@ -3,9 +3,9 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+let React = require('react');
+const ReactNative = require('react-native');
+let {
   Image,
   ScrollView,
   StyleSheet,
@@ -13,9 +13,9 @@ var {
   View,
 } = ReactNative;
 
-var getImageSource = require('./getImageSource');
-var getStyleFromScore = require('./getStyleFromScore');
-var getTextFromScore = require('./getTextFromScore');
+const getImageSource = require('./getImageSource');
+const getStyleFromScore = require('./getStyleFromScore');
+const getTextFromScore = require('./getTextFromScore');
 
 class MovieScreen extends React.Component {
   render() {
@@ -50,8 +50,8 @@ class MovieScreen extends React.Component {
 
 class Ratings extends React.Component {
   render() {
-    var criticsScore = this.props.ratings.critics_score;
-    var audienceScore = this.props.ratings.audience_score;
+    const criticsScore = this.props.ratings.critics_score;
+    const audienceScore = this.props.ratings.audience_score;
 
     return (
       <View>
@@ -91,7 +91,7 @@ class Cast extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   contentContainer: {
     padding: 10,
   },

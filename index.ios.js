@@ -3,15 +3,15 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+let React = require('react');
+const ReactNative = require('react-native');
+let {
   AppRegistry,
   NavigatorIOS,
   StyleSheet,
 } = ReactNative;
 
-var SearchScreen = require('./SearchScreen');
+const SearchScreen = require('./SearchScreen');
 
 class MoviesApp extends React.Component {
   render() {
@@ -27,7 +27,7 @@ class MoviesApp extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',

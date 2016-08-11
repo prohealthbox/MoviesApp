@@ -3,12 +3,12 @@
  */
 'use strict';
 
-var ReactNative = require('react-native');
-var {
+const ReactNative = require('react-native');
+const {
   StyleSheet,
 } = ReactNative;
 
-var MAX_VALUE = 200;
+const MAX_VALUE = 200;
 
 import type { StyleObj } from 'StyleSheetTypes';
 
@@ -17,17 +17,17 @@ function getStyleFromScore(score: number): StyleObj {
     return styles.noScore;
   }
 
-  var normalizedScore = Math.round((score / 100) * MAX_VALUE);
+  const normalizedScore = Math.round((score / 100) * MAX_VALUE);
   return {
     color: 'rgb(' +
       (MAX_VALUE - normalizedScore) + ', ' +
       normalizedScore + ', ' +
       0 +
-    ')'
+    ')',
   };
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   noScore: {
     color: '#999999',
   },

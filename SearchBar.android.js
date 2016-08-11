@@ -4,9 +4,9 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+let React = require('react');
+const ReactNative = require('react-native');
+let {
   Image,
   Platform,
   ActivityIndicator,
@@ -16,18 +16,19 @@ var {
   View,
 } = ReactNative;
 
-var IS_RIPPLE_EFFECT_SUPPORTED = Platform.Version >= 21;
+const IS_RIPPLE_EFFECT_SUPPORTED = Platform.Version >= 21;
 
 class SearchBar extends React.Component {
   render() {
-    var background = IS_RIPPLE_EFFECT_SUPPORTED ?
+    let background = IS_RIPPLE_EFFECT_SUPPORTED ?
       TouchableNativeFeedback.SelectableBackgroundBorderless() :
       TouchableNativeFeedback.SelectableBackground();
     return (
       <View style={styles.searchBar}>
         <TouchableNativeFeedback
-            background={background}
-            onPress={() => this.refs.input && this.refs.input.focus()}>
+          background={background}
+          onPress={() => this.refs.input && this.refs.input.focus()}
+        >
           <View>
             <Image
               source={require('./assets/images/android_search_white.png')}
@@ -39,7 +40,7 @@ class SearchBar extends React.Component {
           ref="input"
           autoCapitalize="none"
           autoCorrect={false}
-          autoFocus={true}
+          autoFocus
           onChange={this.props.onSearchChange}
           placeholder="Search a movie..."
           placeholderTextColor="rgba(255, 255, 255, 0.5)"
@@ -57,7 +58,7 @@ class SearchBar extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -71,7 +72,7 @@ var styles = StyleSheet.create({
     color: 'white',
     height: 50,
     padding: 0,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   spinner: {
     width: 30,

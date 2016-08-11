@@ -3,9 +3,9 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+let React = require('react');
+const ReactNative = require('react-native');
+let {
   ActivityIndicator,
   ListView,
   Platform,
@@ -13,22 +13,22 @@ var {
   Text,
   View,
 } = ReactNative;
-var TimerMixin = require('react-timer-mixin');
+const TimerMixin = require('react-timer-mixin');
 
-var invariant = require('invariant');
+const invariant = require('invariant');
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 
-var MovieCell = require('./MovieCell');
-var MovieScreen = require('./MovieScreen');
-var SearchBar = require('SearchBar');
+let MovieCell = require('./MovieCell');
+const MovieScreen = require('./MovieScreen');
+let SearchBar = require('SearchBar');
 
 /**
  * This is for demo purposes only, and rate limited.
  * In case you want to use the Rotten Tomatoes' API on a real app you should
  * create an account at http://developer.rottentomatoes.com/
  */
-var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/';
-var API_KEYS = [
+const API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/';
+const API_KEYS = [
   '7waqfqbprs7pajbz28mqf6vz',
   // 'y4vwv8m33hed9ety83jmv52f', Fallback api_key
 ];
@@ -37,20 +37,20 @@ var API_KEYS = [
 // with values of null meaning "being fetched"
 // and anything besides null and undefined
 // as the result of a valid query
-var resultsCache = {
+const resultsCache = {
   dataForQuery: {},
   nextPageNumberForQuery: {},
   totalForQuery: {},
 };
 
-var LOADING = {};
+const LOADING = {};
 
-var SearchScreen = React.createClass({
+const SearchScreen = React.createClass({
   mixins: [TimerMixin],
 
   timeoutID: (null: any),
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       isLoading: false,
       isLoadingTail: false,
@@ -62,12 +62,12 @@ var SearchScreen = React.createClass({
     };
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.searchMovies('');
   },
 
-  _urlForQueryAndPage: function(query: string, pageNumber: number): string {
-    var apiKey = API_KEYS[this.state.queryNumber % API_KEYS.length];
+  _urlForQueryAndPage(query: string, pageNumber: number): string {
+    const apiKey = API_KEYS[this.state.queryNumber % API_KEYS.length];
     if (query) {
       return (
         API_URL + 'movies.json?apikey=' + apiKey + '&q=' +
@@ -82,20 +82,20 @@ var SearchScreen = React.createClass({
     }
   },
 
-  searchMovies: function(query: string) {
+  searchMovies(query: string) {
     this.timeoutID = null;
 
-    this.setState({filter: query});
+    this.setState({ filter: query });
 
-    var cachedResultsForQuery = resultsCache.dataForQuery[query];
+    const cachedResultsForQuery = resultsCache.dataForQuery[query];
     if (cachedResultsForQuery) {
       if (!LOADING[query]) {
         this.setState({
           dataSource: this.getDataSource(cachedResultsForQuery),
-          isLoading: false
+          isLoading: false,
         });
       } else {
-        this.setState({isLoading: true});
+        this.setState({ isLoading: true });
       }
       return;
     }
@@ -138,8 +138,8 @@ var SearchScreen = React.createClass({
       .done();
   },
 
-  hasMore: function(): boolean {
-    var query = this.state.filter;
+  hasMore(): boolean {
+    const query = this.state.filter;
     if (!resultsCache.dataForQuery[query]) {
       return true;
     }
@@ -149,8 +149,8 @@ var SearchScreen = React.createClass({
     );
   },
 
-  onEndReached: function() {
-    var query = this.state.filter;
+  onEndReached() {
+    const query = this.state.filter;
     if (!this.hasMore() || this.state.isLoadingTail) {
       // We're already fetching or have all the elements so noop
       return;
@@ -166,7 +166,7 @@ var SearchScreen = React.createClass({
       isLoadingTail: true,
     });
 
-    var page = resultsCache.nextPageNumberForQuery[query];
+    const page = resultsCache.nextPageNumberForQuery[query];
     invariant(page != null, 'Next page number for "%s" is missing', query);
     fetch(this._urlForQueryAndPage(query, page))
       .then((response) => response.json())
@@ -178,14 +178,14 @@ var SearchScreen = React.createClass({
         });
       })
       .then((responseData) => {
-        var moviesForQuery = resultsCache.dataForQuery[query].slice();
+        const moviesForQuery = resultsCache.dataForQuery[query].slice();
 
         LOADING[query] = false;
         // We reached the end of the list before the expected number of results
         if (!responseData.movies) {
           resultsCache.totalForQuery[query] = moviesForQuery.length;
         } else {
-          for (var i in responseData.movies) {
+          for (const i in responseData.movies) {
             moviesForQuery.push(responseData.movies[i]);
           }
           resultsCache.dataForQuery[query] = moviesForQuery;
@@ -205,35 +205,35 @@ var SearchScreen = React.createClass({
       .done();
   },
 
-  getDataSource: function(movies: Array<any>): ListView.DataSource {
+  getDataSource(movies: Array<any>): ListView.DataSource {
     return this.state.dataSource.cloneWithRows(movies);
   },
 
-  selectMovie: function(movie: Object) {
+  selectMovie(movie: Object) {
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
         title: movie.title,
         component: MovieScreen,
-        passProps: {movie},
+        passProps: { movie },
       });
     } else {
       dismissKeyboard();
       this.props.navigator.push({
         title: movie.title,
         name: 'movie',
-        movie: movie,
+        movie,
       });
     }
   },
 
-  onSearchChange: function(event: Object) {
-    var filter = event.nativeEvent.text.toLowerCase();
+  onSearchChange(event: Object) {
+    const filter = event.nativeEvent.text.toLowerCase();
 
     this.clearTimeout(this.timeoutID);
     this.timeoutID = this.setTimeout(() => this.searchMovies(filter), 100);
   },
 
-  renderFooter: function() {
+  renderFooter() {
     if (!this.hasMore() || !this.state.isLoadingTail) {
       return <View style={styles.scrollSpinner} />;
     }
@@ -241,21 +241,21 @@ var SearchScreen = React.createClass({
     return <ActivityIndicator style={styles.scrollSpinner} />;
   },
 
-  renderSeparator: function(
+  renderSeparator(
     sectionID: number | string,
     rowID: number | string,
     adjacentRowHighlighted: boolean
   ) {
-    var style = styles.rowSeparator;
+    let style = styles.rowSeparator;
     if (adjacentRowHighlighted) {
-        style = [style, styles.rowSeparatorHide];
+      style = [style, styles.rowSeparatorHide];
     }
     return (
-      <View key={'SEP_' + sectionID + '_' + rowID}  style={style}/>
+      <View key={'SEP_' + sectionID + '_' + rowID} style={style} />
     );
   },
 
-  renderRow: function(
+  renderRow(
     movie: Object,
     sectionID: number | string,
     rowID: number | string,
@@ -272,8 +272,8 @@ var SearchScreen = React.createClass({
     );
   },
 
-  render: function() {
-    var content = this.state.dataSource.getRowCount() === 0 ?
+  render() {
+    let content = this.state.dataSource.getRowCount() === 0 ?
       <NoMovies
         filter={this.state.filter}
         isLoading={this.state.isLoading}
@@ -287,7 +287,7 @@ var SearchScreen = React.createClass({
         onEndReached={this.onEndReached}
         automaticallyAdjustContentInsets={false}
         keyboardDismissMode="on-drag"
-        keyboardShouldPersistTaps={true}
+        keyboardShouldPersistTaps
         showsVerticalScrollIndicator={false}
       />;
 
@@ -308,7 +308,7 @@ var SearchScreen = React.createClass({
 
 class NoMovies extends React.Component {
   render() {
-    var text = '';
+    let text = '';
     if (this.props.filter) {
       text = `No results for "${this.props.filter}"`;
     } else if (!this.props.isLoading) {
@@ -325,7 +325,7 @@ class NoMovies extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',

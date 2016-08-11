@@ -4,9 +4,9 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+let React = require('react');
+const ReactNative = require('react-native');
+let {
   ActivityIndicator,
   TextInput,
   StyleSheet,
@@ -34,7 +34,7 @@ class SearchBar extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   searchBar: {
     marginTop: 64,
     padding: 3,

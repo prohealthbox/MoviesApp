@@ -3,26 +3,26 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+let React = require('react');
+const ReactNative = require('react-native');
+let {
   Image,
   Platform,
   StyleSheet,
   Text,
   TouchableHighlight,
   TouchableNativeFeedback,
-  View
+  View,
 } = ReactNative;
 
-var getStyleFromScore = require('./getStyleFromScore');
-var getImageSource = require('./getImageSource');
-var getTextFromScore = require('./getTextFromScore');
+const getStyleFromScore = require('./getStyleFromScore');
+const getImageSource = require('./getImageSource');
+const getTextFromScore = require('./getTextFromScore');
 
 class MovieCell extends React.Component {
   render() {
-    var criticsScore = this.props.movie.ratings.critics_score;
-    var TouchableElement = TouchableHighlight;
+    const criticsScore = this.props.movie.ratings.critics_score;
+    let TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
     }
@@ -31,7 +31,8 @@ class MovieCell extends React.Component {
         <TouchableElement
           onPress={this.props.onSelect}
           onShowUnderlay={this.props.onHighlight}
-          onHideUnderlay={this.props.onUnhighlight}>
+          onHideUnderlay={this.props.onUnhighlight}
+        >
           <View style={styles.row}>
             <Image
               source={getImageSource(this.props.movie, 'det')}
@@ -56,7 +57,7 @@ class MovieCell extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   textContainer: {
     flex: 1,
   },

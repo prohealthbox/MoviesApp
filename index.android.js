@@ -3,9 +3,9 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+let React = require('react');
+const ReactNative = require('react-native');
+let {
   AppRegistry,
   BackAndroid,
   Navigator,
@@ -14,10 +14,10 @@ var {
   View,
 } = ReactNative;
 
-var MovieScreen = require('./MovieScreen');
-var SearchScreen = require('./SearchScreen');
+let MovieScreen = require('./MovieScreen');
+let SearchScreen = require('./SearchScreen');
 
-var _navigator;
+let _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
   if (_navigator && _navigator.getCurrentRoutes().length > 1) {
     _navigator.pop();
@@ -26,7 +26,7 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
   return false;
 });
 
-var RouteMapper = function(route, navigationOperations, onComponentRef) {
+let RouteMapper = function (route, navigationOperations, onComponentRef) {
   _navigator = navigationOperations;
   if (route.name === 'search') {
     return (
@@ -34,16 +34,17 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
     );
   } else if (route.name === 'movie') {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <ToolbarAndroid
           actions={[]}
           navIcon={require('./assets/images/android_back_white.png')}
           onIconClicked={navigationOperations.pop}
           style={styles.toolbar}
           titleColor="white"
-          title={route.movie.title} />
+          title={route.movie.title}
+        />
         <MovieScreen
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           navigator={navigationOperations}
           movie={route.movie}
         />
@@ -54,7 +55,7 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
 
 class MoviesApp extends React.Component {
   render() {
-    var initialRoute = {name: 'search'};
+    let initialRoute = { name: 'search' };
     return (
       <Navigator
         style={styles.container}
@@ -66,7 +67,7 @@ class MoviesApp extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',

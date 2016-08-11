@@ -1,7 +1,7 @@
 /**
  * @flow
  */
-import React from 'react';
+import React, {Component} from 'react';
 import {
   ActivityIndicator,
   ListView,
@@ -22,8 +22,8 @@ var SearchBar = require('SearchBar');
 
 var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/';
 var API_KEYS = [
- '7waqfqbprs7pajbz28mqf6vz',
- // 'y4vwv8m33hed9ety83jmv52f', Fallback api_key
+  '7waqfqbprs7pajbz28mqf6vz',
+  // 'y4vwv8m33hed9ety83jmv52f', Fallback api_key
 ];
 
 var resultsCache = {
@@ -44,7 +44,7 @@ var SearchScreen = React.createClass({
       isLoading: false,
       isLoadingTail: false,
       dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row !== row2,
+        rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       filter: '',
       queryNumber: 0,
@@ -292,7 +292,7 @@ var SearchScreen = React.createClass({
           {content}
         </View>
       );
-  };
+  },
 });
 
 class NoMovies extends Component {

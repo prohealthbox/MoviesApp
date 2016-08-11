@@ -7,26 +7,60 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  BackAndroid,
+  Navigator,
   StyleSheet,
-  Text,
+  ToolbarAndroid,
   View
 } from 'react-native';
 
+var MovieScreen = require('./MovieScreen');
+var SearchScreen = require('./SearchScreen');
+
+var _navigator;
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+    _navigator.pop();
+    return true;
+  }
+  return false;
+});
+
+var RouteMapper = function(route, navigationOperations, onComponentRef) {
+  _navigator = navigationOperations;
+  if (route.name === 'search') {
+    reutrn (
+      <SearchScreen navigator={navigationOperations} />
+    );
+  } else if (route.name === 'movie') {
+    <View style={{flex: 1}}>
+      <ToolbarAndroid
+        actions={[]}
+        navIcon={require('image!android_back_white')}
+        onIconClicked={navigationOperations.pop}
+        style={styles.toolbar}
+        titleColor="white"
+        title={route.movie.title}
+      />
+      <MovieScreen
+        style={{flex: 1}}
+        navigator={navigationOperations}
+        movie={route.movie}
+      />
+    </View>
+  }
+}
+
 class MoviesApp extends Component {
   render() {
+    var initialRoute = {name: 'search'};
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+      <Navigator
+        style={styles.container}
+        initialRoute={initialRoute}
+        configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+        renderScene={RouteMapper}
+      />
     );
   }
 }
@@ -34,19 +68,11 @@ class MoviesApp extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  toolbar: {
+    backgroundColor: '#a9a9a9',
+    height: 56
   },
 });
 

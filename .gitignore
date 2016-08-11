@@ -39,3 +39,9 @@ buck-out/
 \.buckd/
 android/app/libs
 android/keystores/debug.keystore
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json

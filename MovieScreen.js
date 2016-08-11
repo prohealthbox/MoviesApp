@@ -130,7 +130,7 @@ var styles = StyleSheet.create({
   },
   detailsImage: {
     width: 134,
-    heigth: 200,
+    height: 200,
     backgroundColor: '#eaeaea',
     marginRight: 10,
   },

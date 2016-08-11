@@ -15,8 +15,8 @@ var {
 } = ReactNative;
 var TimerMixin = require('react-timer-mixin');
 
-var invariant = require('fbjs/lib/invariant');
-var dismissKeyboard = require('dismissKeyboard');
+var invariant = require('invariant');
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 
 var MovieCell = require('./MovieCell');
 var MovieScreen = require('./MovieScreen');
